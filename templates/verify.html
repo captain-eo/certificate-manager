@@ -1,0 +1,17 @@
+{% extends "template.html" %}
+{% block body %}
+
+
+
+
+<div class="row">
+  <div class="col-md-12">
+    <hr>
+    <pre>
+    {% for info in certinfo -%}
+    {{ info }}
+    {% endfor %}
+  </pre>
+  </div>
+</div>
+{% endblock %}

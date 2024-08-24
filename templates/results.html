@@ -1,0 +1,15 @@
+{% extends "template.html" %}
+{% block body %}
+
+
+
+
+<div class="row">
+  <div class="col-md-4">
+    <hr>
+    {% for id, domain, date, organization in results %}
+    <p>{{ id }} - {{ date }} - <a href="/display?certid={{ id }}">{{ domain }}</a> - {{ organization }}</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

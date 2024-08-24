@@ -1,0 +1,30 @@
+{% extends "template.html" %}
+{% block body %}
+
+
+
+<br><br>
+<div class="row">
+  <div class="col-md-6">
+    <div class="jumbotron">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <div class="alert alert-danger" role="alert">
+      {% for message in messages %}
+        <strong>{{ message }}</strong>
+      {% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
+      <h3>Start with CSR ( Recommended )</h3>
+      <p>Decode CSR to populate fields and ensure accurate information.</p>
+      <p><a class="btn btn-primary btn-med" href="/addfromcsr" role="button">Add from CSR</a></p>
+      <hr>
+      <h3>Start with CRT</h3>
+      <p>Start with certificate if no CSR available.  Cannot read and populate all fields.</p>
+      <p><a class="btn btn-primary btn-med" href="/addfromcrt" role="button">Add from CRT</a></p>
+      <hr>
+    </div>
+  </div>
+</div>
+{% endblock %}

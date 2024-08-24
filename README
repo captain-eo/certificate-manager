@@ -1,0 +1,5 @@
+Certificate Manager
+
+Please copy config.yml to local.yml.  Edit with your own config values.
+
+In order for the "verify" function to work.  Server must have sslyze installed.

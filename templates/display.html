@@ -1,0 +1,208 @@
+{% extends "template.html" %}
+{% block body %}
+
+
+
+
+<div class="row">
+  <div class="col-md-5">
+    <hr>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="alert alert-danger" role="alert">
+    {% for message in messages %}
+      <strong>{{ message }}</strong>
+    {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+      <p><strong>Certificate ID:</strong> {{ cert.id }}</p>
+      {% if cert.date_certstarts == 'None' %}
+      <p><strong>Key Generated:</strong> {{ cert.date_generated }}</p>
+      {% else %}
+      <p><strong>Certificate Issued:</strong> {{ cert.date_certstarts }}</p>
+      <p><strong>Certificate Epires:</strong> {{ cert.date_certexpires }}</p>
+      {% endif %}
+      {% if cert.issuer != 'None' %}
+      <p><strong>Issued By:</strong> {{ cert.issuer }}
+      {% if cert.issuer == 'GeoTrust Inc.' and cert.intermediate == 'None' %}
+      <form action="/addintermediate" class="form-inline" method="POST">
+      <input type="hidden" name="certid" value="{{ cert.id }}"></input>
+      <input type="hidden" name="intermediate" value="
+-----BEGIN CERTIFICATE-----
+MIIEbzCCA1egAwIBAgIDAjpzMA0GCSqGSIb3DQEBCwUAMEIxCzAJBgNVBAYTAlVT
+MRYwFAYDVQQKEw1HZW9UcnVzdCBJbmMuMRswGQYDVQQDExJHZW9UcnVzdCBHbG9i
+YWwgQ0EwHhcNMTQwNjExMjIwMjU5WhcNMjIwNTIwMjIwMjU5WjBmMQswCQYDVQQG
+EwJVUzEWMBQGA1UEChMNR2VvVHJ1c3QgSW5jLjEdMBsGA1UECxMURG9tYWluIFZh
+bGlkYXRlZCBTU0wxIDAeBgNVBAMTF0dlb1RydXN0IERWIFNTTCBDQSAtIEczMIIB
+IjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs0Q6bLCuyxT5jBl0NFypaeOI
+U3elp/+90TwNJ+TerX+80ZBYk9am2jmcreEOVkbulZ4QaEycK/ZqOouAgYcGVyUa
+VlKU3ZDrZzve+q42aNNiafZsgiRET4dcmBGVZGvoDNHd5ieXrszikWpBErar5cxu
+zCO4Y4ofMZMtBsT36D1YzZcIRmx7dMD4/DE7p3/Xj7DJFWNQehJN9RIeo35V43W3
+6h7qMSwITtjLQ3SJJLzSDh7w2wUk9oq/ECeEQRr2GFPukdBUF9N9Pn6yfai/27kh
+KvCJuQhuWrNe6oK4ficLzFZzgQVP45YtcdV4p2DD1+yqORoFOYKB4BUsNdHuJQID
+AQABo4IBSDCCAUQwHwYDVR0jBBgwFoAUwHqYaI2J+6sFZAwRfap9ZbjKzE4wHQYD
+VR0OBBYEFK1lIoWQ0DvjoUmLN/nxCx1fF6B3MBIGA1UdEwEB/wQIMAYBAf8CAQAw
+DgYDVR0PAQH/BAQDAgEGMDUGA1UdHwQuMCwwKqAooCaGJGh0dHA6Ly9nLnN5bWNi
+LmNvbS9jcmxzL2d0Z2xvYmFsLmNybDAuBggrBgEFBQcBAQQiMCAwHgYIKwYBBQUH
+MAGGEmh0dHA6Ly9nLnN5bWNkLmNvbTBMBgNVHSAERTBDMEEGCmCGSAGG+EUBBzYw
+MzAxBggrBgEFBQcCARYlaHR0cDovL3d3dy5nZW90cnVzdC5jb20vcmVzb3VyY2Vz
+L2NwczApBgNVHREEIjAgpB4wHDEaMBgGA1UEAxMRU3ltYW50ZWNQS0ktMS02OTkw
+DQYJKoZIhvcNAQELBQADggEBAE4nuBrHO9xdu54aNSMeiFWQ0eyGnIi34B9nh+J8
+tUMDDrYC6OD/hoQZcenyS/WeLi5e26vWHE7EPrgseIZxEK6NxXC/pPmJ5rTt6Evt
+fAkqCQgGPtTh3oKSDDQwNQrBYHXKtlVrqgBCyz/7EOH7hcEhkHIrbsDondm1WlCO
+NB67OKc8Mb168kOL6xbKrZveax74T7ZeSikfehTukfSUT6S9m3Z6vPFRepaogQ6D
+hz+Lrl4ymzSesufbL+wCoOH9UVL+LNs2usHWXktYbd7G4eH6mgMsW6Lhs5v5NuzB
+c/ozEmaV42kQtteqM/r2nUFtliq6voMxQX8MCtJp1vw1TMM=
+-----END CERTIFICATE-----
+"></input>
+      <input type="submit" class="btn btn-xs" value="Add QuickSSL Intermediate">
+      </form>
+      {% endif %}
+      </p>
+      {% endif %}
+      <p><strong>Common Name:</strong> {{ cert.domain }}</p>
+      <p><strong>Country:</strong> {{ cert.country }}</p>
+      <p><strong>State or Province:</strong> {{ cert.state }}</p>
+      <p><strong>City or Locality:</strong> {{ cert.city }}</p>
+      <p><strong>Organization Name:</strong> {{ cert.organization }}</p>
+      <p><strong>Organizational Unit:</strong> {{ cert.organizational_unit }}</p>
+      <p><strong>Email Address:</strong> {{ cert.email_address }}</p>
+
+      <div class="row">
+        {% if cert.csr != 'None' %}
+        <div class="col-md-4">
+          <form action="/decode" class="form-inline" method="POST">
+          <input type="hidden" name="suppliedcsr" value="{{ cert.csr }}"></input>
+          <button type="submit" class="btn btn-sm">Generate New Key/CSR</button>
+          </form>
+        </div>
+        {% endif %}
+        {% if cert.crt != 'None' and cert.intermediate != 'None' %}
+        <div class="col-md-2">
+        {% set pfxfile = cert.domain + '_' + cert.date_certstarts[:4] + '.pfx' %}
+        <form action="/genpfx/{{ pfxfile|replace("*","wildcard") }}" method="POST">
+        <input type="hidden" name="certid" value="{{ cert.id }}"></input>
+        <button type="submit" class="btn btn-sm">Download PFX</button>
+        </form>
+        </div>
+        {% endif %}
+      </div>
+
+
+      {% if cert.crt == "None" %}
+      <hr>
+      <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#addcrt">
+      Add Certificate
+    </button>
+    <hr>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="addcrt" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Paste Certificate</h4>
+      </div>
+      <div class="modal-body">
+
+    <br>
+        <form action="/addcrt" method="POST">
+
+                    <br>
+                    <div class="form-group">
+                      <textarea class="form-control" name="certificate" rows="20"></textarea>
+                      <input type="hidden" name="certid" value="{{ cert.id }}"></input>
+                    </div>
+        <br><br>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-xs-2">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+      <div class="col-xs-2">
+        <input type="submit" class="btn btn-primary" value="Upload">
+      </form>
+    </div>
+    </div>
+      </div>
+    </div>
+    </div>
+    </div>
+
+      {% endif %}
+
+      {% if cert.intermediate == "None" %}
+      <hr>
+      <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#addintermediate">
+      Add Intermediate
+    </button>
+    <hr>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="addintermediate" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Paste Intermediate</h4>
+      </div>
+      <div class="modal-body">
+
+    <br>
+        <form action="/addintermediate" method="POST">
+
+                    <br>
+                    <div class="form-group">
+                      <textarea class="form-control" name="intermediate" rows="20"></textarea>
+                      <input type="hidden" name="certid" value="{{ cert.id }}"></input>
+                    </div>
+        <br><br>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-xs-2">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+      <div class="col-xs-2">
+        <input type="submit" class="btn btn-primary" value="Upload">
+      </form>
+    </div>
+    </div>
+      </div>
+    </div>
+    </div>
+    </div>
+
+      {% endif %}
+
+
+
+      {% if cert.crt != "None" %}
+        <hr>
+        <pre class="bg-info">Certificate</pre>
+        <pre>{{ cert.crt }}</pre><br>
+      {% endif %}
+      {% if cert.intermediate != "None" %}
+        <pre class="bg-info">Intermediate Certificate</pre>
+        <pre>{{ cert.intermediate }}</pre><br>
+      {% endif %}
+      <pre class="bg-info">Key</pre>
+      <pre>{{ cert.key }}</pre><br>
+      <pre class="bg-info">Certificate Signing Request</pre>
+      <pre>{{ cert.csr }}</pre><br>
+
+      <p><a href="/delete_cert?certid={{ cert.id }}" onclick="return confirm('Absolutely for sure delete?')">[ Delete All Components ]</a></p>
+
+  </div>
+</div>
+
+
+
+
+{% endblock %}

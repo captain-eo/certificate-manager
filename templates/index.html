@@ -1,0 +1,62 @@
+{% extends "template.html" %}
+{% block body %}
+
+
+
+
+<br><br>
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="jumbotron">
+      <h3>Search Certificates</h3>
+      <br>
+      <div class="form-group">
+        <form action="/results" method="POST">
+        <label for = "domain">Search by domain:</label>
+        <input type="text" class="form-control" name="domain">
+        <br>
+        <button type="submit" class="btn btn-default">Search...</button>
+        </form>
+      </div>
+      <hr>
+      <br>
+      <div class="form-group">
+        <form action="/results" method="POST">
+        <input type="hidden" name="domain" value=""></input>
+        <button type="submit" class="btn btn-default">List All Certificates</button>
+        </form>
+      </div>
+      <br>
+      <hr>
+      <div class="form-group">
+        <h3>SSL Verification</h3>
+        <form action="/verify" method="POST">
+        <input type="text" class="form-control" name="domain">
+        <br>
+        <button type="submit" class="btn btn-default">Verify...</button>
+        </form>
+    </div>
+  </div>
+</div>
+  <div class="col-md-1">
+  </div>
+  <div class="col-md-4">
+    <div class="jumbotron">
+      <h3>Create</h3>
+      <p>Generate a CSR/KEY pair and store it in the database</p>
+      <p><a class="btn btn-primary btn-med" href="/create" role="button">Generate CSR</a></p>
+      <hr>
+      <h3>Decode</h3>
+      <p>Decode a certificate signing request.</p>
+      <p><a class="btn btn-primary btn-med" href="/decode" role="button">Decode CSR</a></p>
+      <hr>
+      <h3>Add</h3>
+      <p>Manually upload certificate components.</p>
+      <p><a class="btn btn-primary btn-med" href="/add" role="button">Add CRT</a></p>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

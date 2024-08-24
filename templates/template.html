@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" media="screen" href="/static/css/bootstrap.min.css">
+<head>
+  <title>Certificate Manager</title>
+  <meta name="viewport" content="width=device.width, initial-scale=1">
+  <STYLE type=text/css>
+  code.csr {
+  COLOR: blue
+  }
+  </style>
+</head>
+
+<body class="body">
+
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-md-4">
+        <h4><span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span> &nbsp;Certificate Manager
+        <br><small>SSL Management For Idiots</small></h4>
+      </div>
+
+      {% if pageType != "home" %}
+      <div class="col-md-1">
+      </div>
+      <div class="col-md-1">
+        <br>
+        <h4><span class="	glyphicon glyphicon-triangle-left" aria-hidden="true"></span> &nbsp;<a href="/">Back</a>
+      </div>
+      {% endif %}
+
+    </div>
+
+
+
+  {% block body %}
+  {% endblock %}
+  </div>
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<script>
+$('#myDropdown').on('show.bs.dropdown', function () {
+  // do something…
+})
+</script>
+</body>
+</html>

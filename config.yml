@@ -1,0 +1,10 @@
+mysql:
+  host: localhost
+  user: mysqluser
+  passwd: password
+  db: certmanager
+
+# Add your own random keys
+appkeys:
+  flasksecret: secretkey
+  cipherkey: cipherkey

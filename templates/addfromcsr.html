@@ -1,0 +1,79 @@
+{% extends "template.html" %}
+{% block body %}
+
+
+
+
+<div class="row">
+  <div class="col-md-6">
+    <hr>
+
+
+    {% if components == "None" %}
+    <form action="/addfromcsr" method="POST">
+      <div class="form-group">
+        <h3>Paste CSR:</h3>
+        <textarea class="form-control" name="csr" rows="20" cols="50"></textarea><br>
+        <button type="submit" class="btn btn-default">Decode CSR</button>
+      </div>
+    </form>
+    {% else %}
+
+
+    <h4>These components captured from CSR.  Please paste in certificate and key.</h4><br>
+
+    <form action="/storecomponents" method="POST">
+      <div class="form-group">
+        <div class="form-group">
+          <label for = "common_name">Common Name ( Domain Name of website ex: www.pspinc.com ) ** include www. **</label>
+          <input type="text" class="form-control" name="common_name" value="{{ components['CN'] }}">
+        </div>
+        <div class="form-group">
+          <label for = "country">Country ( Two letter code ex: US or JP )</label>
+          <input type="text" class="form-control" name="country" value="{{ components['C'] }}">
+        </div>
+        <div class="form-group">
+          <label for = "state">State or Province Name ( Full name ex: Washington or Tokyo )</label>
+          <input type="text" class="form-control" name="state" value="{{ components['ST'] }}">
+        </div>
+        <div class="form-group">
+          <label for = "city">City or Locality ( ex: Seattle )</label>
+          <input type="text" class="form-control" name="city" value="{{ components['L'] }}">
+        </div>
+        <div class="form-group">
+          <label for = "organization">Organization Name ( ex: My Company, LLC ) </label>
+          <input type="text" class="form-control" name="organization" value="{{ components['O'] }}">
+        </div>
+        <div class="form-group">
+          <label for = "organizational_unit">Organizational Unit or Section ( ex: Internet Division )</label>
+          <input type="text" class="form-control" name="organizational_unit" value="{{ components['OU'] }}">
+        </div>
+        <div class="form-group">
+          <label for = "email_address">E-Mail Address ( Often not used )</label>
+          <input type="text" class="form-control" name="email_address" value="{{ components['emailAddress'] }}">
+        </div>
+        <div class="form-group">
+          <h3>Paste Key:</h3>
+          <textarea class="form-control" name="key" rows="20" cols="50"></textarea><br>
+        </div>
+        <div class="form-group">
+          <h3>Paste Certificate:</h3>
+          <textarea class="form-control" name="certificate" rows="20" cols="50"></textarea><br>
+        </div>
+        <input type="hidden" name="csr" value="{{ csr }}"></input>
+        <button type="submit" class="btn btn-default">Manually Store Components</button>
+      </div>
+
+
+
+    </form>
+
+
+
+
+    {% endif %}
+
+
+  </div>
+</div>
+{% endblock %}
